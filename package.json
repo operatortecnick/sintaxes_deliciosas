@@ -1,0 +1,51 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Um player de IPTV com tema de cartoon.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "./node_modules/.bin/electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.jules.cartoons-iptv-player",
+    "productName": "Cartoon IPTV Player",
+    "files": [
+      "main.js",
+      "index.html",
+      "renderer.js",
+      "preload.js",
+      "style.css",
+      "mock-translation-api.js",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/operatortecnick/sintaxes_deliciosas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/operatortecnick/sintaxes_deliciosas/issues"
+  },
+  "homepage": "https://github.com/operatortecnick/sintaxes_deliciosas#readme",
+  "devDependencies": {
+    "electron": "^37.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "hls.js": "^1.6.11",
+    "iptv-playlist-parser": "^0.15.0"
+  }
+}

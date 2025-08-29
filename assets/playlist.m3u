@@ -1,0 +1,22 @@
+#EXTM3U
+
+#EXTINF:-1 tvg-id="PlutoTVAnime.us" tvg-logo="https://i.imgur.com/bvbn8pa.png" group-title="Animation",Pluto TV Anime
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/608181d420fc8500075f612a/master.m3u8
+
+#EXTINF:-1 tvg-id="GikTVMX.mx" tvg-logo="https://i.imgur.com/Gwz78jZ.png" group-title="Animation",GikTVMx
+https://pistream.ddns.net/hls/stream.m3u8
+
+#EXTINF:-1 tvg-id="1KZNTV.za" tvg-logo="https://admango.cdn.mangomolo.com/analytics/uploads/188/6544bebaae.jpg" group-title="Entertainment",1KZN TV
+https://cdn.freevisiontv.co.za/sttv/smil:1kzn.stream.smil/playlist.m3u8
+
+#EXTINF:-1 tvg-id="4UTV.tr" tvg-logo="https://i.imgur.com/PexhKwp.png" group-title="Entertainment",4U TV
+https://hls.4utv.live/hls/stream.m3u8
+
+#EXTINF:-1 tvg-id="A&E.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/512px-A%26E_Network_logo.svg.png" group-title="Entertainment",A&E East
+https://tvpass.org/live/AEEast/hd
+
+#EXTINF:-1 tvg-id="BBCNews.uk" tvg-name="BBC News" tvg-logo="https://i.imgur.com/3y4Y2sT.png" group-title="News",BBC News
+https://d3i7p4scq5p8j9.cloudfront.net/v1/master/353a0593739744b59595f5a894511d73a386a51d/cc-z46pswns8dp1b-ssai-prd/dist/samsungtv/318/hls/master/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Bloomberg.us" tvg-name="Bloomberg" tvg-logo="https://i.imgur.com/sJj4Z2L.png" group-title="News",Bloomberg TV+
+https://cdn.api.video/live/lixD44o5T9s0E2r42dprcZcT/hls/manifest.m3u8

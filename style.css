@@ -1,0 +1,112 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Import a cartoonish font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
+/* Define color palette inspired by Ed, Edd n Eddy */
+:root {
+  --background-color: #f0f8ff; /* Light sky blue */
+  --text-color: #333;
+  --header-color: #e64a19; /* A punchy orange/red */
+  --item-bg-color: #fffde7; /* Creamy yellow, like paper */
+  --item-border-color: #212121; /* Thick black outline */
+}
+
+body {
+  font-family: 'Gloria Hallelujah', cursive;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+h1 {
+  color: var(--header-color);
+  text-align: center;
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px var(--item-border-color);
+}
+
+ul {
+  list-style-type: none;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+li {
+  background-color: var(--item-bg-color);
+  border: 4px solid var(--item-border-color);
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Wobbly border effect */
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+li:hover {
+  transform: translateY(-5px) rotate(1deg);
+  box-shadow: 5px 5px 0px var(--item-border-color);
+}
+
+.back-button {
+  background-color: var(--header-color);
+  color: var(--item-bg-color);
+  border: 4px solid var(--item-border-color);
+  padding: 10px 20px;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: block;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: transform 0.2s ease;
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+}
+
+.video-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  border: 4px solid var(--item-border-color);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#video-player {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.subtitle-container {
+  position: absolute;
+  bottom: 60px; /* Adjust based on video controls height */
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-align: center;
+  font-size: 1.4em;
+  text-shadow: 1px 1px 2px #000;
+  pointer-events: none; /* Allows clicks to go through to the video player */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show subtitles when they have content */
+.subtitle-container:not(:empty) {
+  opacity: 1;
+}
