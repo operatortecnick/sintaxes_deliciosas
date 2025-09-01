@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navegador Sintaxes Deliciosas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="browser-container">
+        <!-- Browser Header -->
+        <div class="browser-header">
+            <div class="browser-controls">
+                <button class="control-btn close" title="Fechar"></button>
+                <button class="control-btn minimize" title="Minimizar"></button>
+                <button class="control-btn maximize" title="Maximizar"></button>
+            </div>
+            <div class="browser-title">Sintaxes Deliciosas Browser</div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="navigation-bar">
+            <div class="nav-buttons">
+                <button id="backBtn" class="nav-btn" title="Voltar">←</button>
+                <button id="forwardBtn" class="nav-btn" title="Avançar">→</button>
+                <button id="refreshBtn" class="nav-btn" title="Atualizar">⟳</button>
+                <button id="homeBtn" class="nav-btn" title="Início">🏠</button>
+            </div>
+            <div class="address-bar">
+                <input type="text" id="urlInput" placeholder="Digite uma URL ou código para análise..." value="sintaxes://home">
+                <button id="goBtn" class="go-btn">Ir</button>
+            </div>
+            <div class="browser-menu">
+                <button id="menuBtn" class="menu-btn">⋮</button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <div id="webContent" class="web-content">
+                <div class="welcome-page">
+                    <h1>🍯 Bem-vindo ao Navegador Sintaxes Deliciosas</h1>
+                    <p>Corretor supremo de programas, funções, aprimoramentos e sintaxes no geral</p>
+                    
+                    <div class="features">
+                        <div class="feature-card">
+                            <h3>📝 Análise de Código</h3>
+                            <p>Cole seu código na barra de endereço com o prefixo "code:" para análise automática</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🔍 Verificação de Sintaxe</h3>
+                            <p>Detecta erros de sintaxe em múltiplas linguagens de programação</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>✨ Sugestões de Melhoria</h3>
+                            <p>Receba sugestões inteligentes para melhorar seu código</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Ações Rápidas:</h3>
+                        <button class="action-btn" onclick="loadExample('python')">Exemplo Python</button>
+                        <button class="action-btn" onclick="loadExample('javascript')">Exemplo JavaScript</button>
+                        <button class="action-btn" onclick="loadExample('html')">Exemplo HTML</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="statusText">Pronto</span>
+            <span id="progressBar" class="progress-bar"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
