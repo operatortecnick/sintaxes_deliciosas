@@ -110,8 +110,47 @@ def main():
             status = "📈" if change > 0 else "📉" if change < 0 else "➡️"
             print(f"  {symbol}: ${price:.2f} {status}")
     
+    # Example 6: Trending Stocks
+    print("\n📈 Example 6: Trending Stocks")
+    print("-" * 35)
+    
+    trending = extractor.get_trending_stocks()
+    print("Top trending stocks:")
+    for i, stock in enumerate(trending[:5]):
+        print(f"  {i+1}. {stock['symbol']} - {stock['name']}")
+    
+    # Example 7: Cryptocurrency
+    print("\n💰 Example 7: Cryptocurrency Prices")
+    print("-" * 40)
+    
+    crypto_result = extractor.get_crypto_prices(['bitcoin', 'ethereum', 'dogecoin'])
+    if crypto_result.get('status') == 'success':
+        for symbol, data in crypto_result['data'].items():
+            if 'price' in data:
+                print(f"  {symbol}: ${data['price']:.2f}")
+    else:
+        print(f"  Crypto data not available: {crypto_result.get('message', 'Network limited')}")
+    
+    # Example 8: Fallback System
+    print("\n🔄 Example 8: Fallback System")
+    print("-" * 35)
+    
+    fallback_result = extractor.get_stock_with_fallback('TSLA')
+    if fallback_result.get('status') == 'success':
+        method = fallback_result.get('method_used', 'Unknown')
+        price = fallback_result.get('regularMarketPrice') or fallback_result.get('price', 'N/A')
+        print(f"TSLA price: ${price}")
+        print(f"Retrieved using: {method}")
+    else:
+        print(f"Fallback failed: {fallback_result.get('message')}")
+    
     print("\n✨ Example completed! Use the CLI for interactive usage:")
     print("python cli.py --help")
+    print("")
+    print("🚀 New commands to try:")
+    print("  python cli.py stock trending")
+    print("  python cli.py stock crypto bitcoin ethereum")
+    print("  python cli.py stock fallback AAPL --scraper")
 
 
 if __name__ == '__main__':

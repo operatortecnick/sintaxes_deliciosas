@@ -8,9 +8,13 @@
 - **Yahoo Finance** - Dados em tempo real, sem necessidade de chave API
 - **Alpha Vantage** - 500 requisições/dia gratuitas
 - **Finnhub** - 60 chamadas/minuto gratuitas
+- **Web Scraping** - Fallback automático para múltiplas fontes
+- **CoinGecko** - Preços de criptomoedas gratuitos
 - Busca de ações por nome ou símbolo
 - Análise de portfólio
 - Dados históricos e em tempo real
+- Ações em tendência
+- Sistema de fallback robusto
 
 ### 🤖 APIs de IA/GPT (Gratuitas)
 - **Hugging Face** - Modelos gratuitos disponíveis
@@ -46,6 +50,15 @@ python cli.py stock price AAPL
 
 # Buscar ações
 python cli.py stock search "Apple Inc"
+
+# Ações em tendência
+python cli.py stock trending
+
+# Preços de criptomoedas
+python cli.py stock crypto bitcoin ethereum
+
+# Fallback com web scraping
+python cli.py stock fallback TSLA --scraper
 
 # Perguntar para IA
 python cli.py ai ask "O que é Python?"
@@ -98,6 +111,19 @@ for symbol, data in portfolio['stocks'].items():
     price = data.get('price', 0)
     change = data.get('change', 0)
     print(f"{symbol}: ${price:.2f} ({change:+.2f})")
+
+# Obter criptomoedas
+crypto_data = extractor.get_crypto_prices(['bitcoin', 'ethereum'])
+print(crypto_data)
+
+# Ações em tendência
+trending = extractor.get_trending_stocks()
+for stock in trending[:5]:
+    print(f"{stock['symbol']}: {stock['name']}")
+
+# Fallback robusto
+stock_data = extractor.get_stock_with_fallback('AAPL')
+print(f"Método usado: {stock_data.get('method_used')}")
 ```
 
 ### Exemplo de Chat com IA
@@ -123,6 +149,8 @@ for provider in providers:
 | Yahoo Finance | ❌ Não | Ilimitado* | Dados em tempo real, histórico |
 | Alpha Vantage | ✅ Sim | 500 req/dia | Dados detalhados, indicadores |
 | Finnhub | ✅ Sim | 60 req/min | Dados fundamentais, notícias |
+| Web Scraping | ❌ Não | Limitado por site | Fallback automático |
+| CoinGecko | ❌ Não | Ilimitado* | Preços de criptomoedas |
 
 *Sujeito a rate limiting informal
 
@@ -168,6 +196,9 @@ RETRY_ATTEMPTS=3
 python cli.py stock price SYMBOL [--period 1d]
 python cli.py stock search QUERY [--limit 5]
 python cli.py stock portfolio SYMBOL1 SYMBOL2 ...
+python cli.py stock trending
+python cli.py stock crypto bitcoin ethereum
+python cli.py stock fallback SYMBOL [--scraper]
 
 # Comandos de IA
 python cli.py ai ask "PERGUNTA" [--provider auto]
@@ -183,11 +214,14 @@ python cli.py test
 ## 🔧 Tratamento de Erros
 
 O sistema inclui:
-- Retry automático para falhas temporárias
-- Fallback entre diferentes provedores de IA
-- Rate limiting respeitoso
-- Mensagens de erro detalhadas
-- Validação de entrada
+- **Retry automático** para falhas temporárias
+- **Fallback entre diferentes provedores** de IA
+- **Web scraping como backup** quando APIs falham
+- **Rate limiting respeitoso**
+- **Múltiplas fontes de dados** para redundância
+- **Mensagens de erro detalhadas**
+- **Validação de entrada**
+- **Sistema robusto offline/online**
 
 ## 🎯 Casos de Uso
 

@@ -107,6 +107,73 @@ def portfolio(ctx, symbols):
             click.echo(f"{symbol}: ❌ {data['error']}")
 
 
+@stock.command()
+@click.argument('symbols', nargs=-1, required=True)
+@click.pass_context
+def crypto(ctx, symbols):
+    """Get cryptocurrency prices"""
+    extractor = ctx.obj['extractor']
+    result = extractor.get_crypto_prices(list(symbols))
+    
+    if result.get('status') == 'success':
+        click.echo(f"\n💰 Cryptocurrency Prices")
+        click.echo("─" * 30)
+        for symbol, data in result['data'].items():
+            if 'price' in data:
+                click.echo(f"{symbol}: ${data['price']:.2f}")
+            else:
+                click.echo(f"{symbol}: ❌ {data.get('message', 'Error')}")
+    else:
+        click.echo(f"❌ Error: {result.get('message', 'Unknown error')}")
+
+
+@stock.command()
+@click.pass_context
+def trending(ctx):
+    """Get trending stocks"""
+    extractor = ctx.obj['extractor']
+    trending = extractor.get_trending_stocks()
+    
+    click.echo(f"\n📈 Trending Stocks")
+    click.echo("─" * 25)
+    for i, stock in enumerate(trending[:10]):
+        symbol = stock.get('symbol', 'N/A')
+        name = stock.get('name', 'N/A')
+        source = stock.get('source', '')
+        click.echo(f"{i+1:2d}. {symbol:6s} - {name}")
+
+
+@stock.command()
+@click.argument('symbol')
+@click.option('--scraper', is_flag=True, help='Force use of web scraper')
+@click.pass_context
+def fallback(ctx, symbol, scraper):
+    """Get stock data with comprehensive fallback"""
+    extractor = ctx.obj['extractor']
+    
+    if scraper:
+        result = extractor.get_stock_price(symbol.upper(), use_scraper=True)
+    else:
+        result = extractor.get_stock_with_fallback(symbol.upper())
+    
+    if result.get('status') == 'success':
+        # Handle different result formats
+        price = result.get('regularMarketPrice') or result.get('price', 'N/A')
+        method = result.get('method_used', result.get('source', 'Unknown'))
+        
+        click.echo(f"\n📊 Stock Data for {symbol.upper()}")
+        click.echo("─" * 40)
+        click.echo(f"Price: ${price}")
+        click.echo(f"Method: {method}")
+        
+        if result.get('change'):
+            change = result.get('change')
+            change_symbol = "📈" if change > 0 else "📉" if change < 0 else "➡️"
+            click.echo(f"Change: {change_symbol} {change:+.2f}")
+    else:
+        click.echo(f"❌ Error: {result.get('message', 'Unknown error')}")
+
+
 # AI Commands
 @ai.command()
 @click.argument('question')

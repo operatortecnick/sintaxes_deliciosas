@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from config import APIConfig
 from stock_extractor import StockExtractor
 from ai_extractor import AIExtractor
+from web_scraper import StockScraper
 
 
 class APIExtractor:
@@ -34,20 +35,34 @@ class APIExtractor:
         self.config = config
         self.stock_extractor = StockExtractor(config)
         self.ai_extractor = AIExtractor(config)
+        self.web_scraper = StockScraper(config)
     
     # Stock Market API Methods
-    def get_stock_price(self, symbol: str, period: str = '1d') -> Dict[str, Any]:
+    def get_stock_price(self, symbol: str, period: str = '1d', use_scraper: bool = False) -> Dict[str, Any]:
         """
-        Get current stock price and data
+        Get current stock price and data with fallback to web scraping
         
         Args:
             symbol: Stock symbol (e.g., 'AAPL', 'GOOGL')
             period: Time period for historical data
+            use_scraper: Force use of web scraper instead of API
             
         Returns:
             Dict containing stock data
         """
-        return self.stock_extractor.get_yahoo_stock_data(symbol, period)
+        if use_scraper:
+            return self.web_scraper.multi_source_scrape(symbol)
+        
+        # Try API first
+        result = self.stock_extractor.get_yahoo_stock_data(symbol, period)
+        
+        # If API fails, try web scraping as fallback
+        if result.get('status') != 'success':
+            scraper_result = self.web_scraper.multi_source_scrape(symbol)
+            if scraper_result.get('status') == 'success':
+                return scraper_result
+        
+        return result
     
     def search_stocks(self, query: str) -> List[Dict[str, Any]]:
         """
@@ -279,3 +294,62 @@ What are potential risks to consider?"""
         results['ai_auto'] = 'working' if ai_test.get('status') == 'success' else 'failed'
         
         return results
+    
+    def get_crypto_prices(self, symbols: List[str]) -> Dict[str, Any]:
+        """
+        Get cryptocurrency prices using free APIs
+        
+        Args:
+            symbols: List of crypto symbols/IDs (e.g., ['bitcoin', 'ethereum'])
+            
+        Returns:
+            Dict containing crypto price data
+        """
+        return self.web_scraper.scrape_crypto_prices(symbols)
+    
+    def get_trending_stocks(self) -> List[Dict[str, Any]]:
+        """
+        Get trending/popular stocks
+        
+        Returns:
+            List of trending stock information
+        """
+        return self.web_scraper.get_trending_stocks()
+    
+    def get_stock_with_fallback(self, symbol: str) -> Dict[str, Any]:
+        """
+        Get stock data with comprehensive fallback strategy
+        Tries multiple methods to ensure data retrieval
+        
+        Args:
+            symbol: Stock symbol
+            
+        Returns:
+            Dict containing stock data from the first successful method
+        """
+        methods = [
+            ('Yahoo API', lambda: self.stock_extractor.get_yahoo_stock_data(symbol)),
+            ('Web Scraper', lambda: self.web_scraper.multi_source_scrape(symbol)),
+        ]
+        
+        # Add API methods if keys are available
+        if self.config.alpha_vantage_key:
+            methods.insert(1, ('Alpha Vantage', lambda: self.stock_extractor.get_alpha_vantage_data(symbol)))
+        
+        if self.config.finnhub_key:
+            methods.insert(1, ('Finnhub', lambda: self.stock_extractor.get_finnhub_data(symbol)))
+        
+        for method_name, method_func in methods:
+            try:
+                result = method_func()
+                if result.get('status') == 'success' and result.get('regularMarketPrice') or result.get('price'):
+                    result['method_used'] = method_name
+                    return result
+            except Exception as e:
+                continue
+        
+        return {
+            'status': 'error',
+            'message': 'All stock data retrieval methods failed',
+            'symbol': symbol
+        }
