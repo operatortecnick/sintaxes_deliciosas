@@ -1,0 +1,10 @@
+{
+  "target_path": "test_data",
+  "providers": [
+    "local_cloud"
+  ],
+  "monitoring_enabled": true,
+  "sync_interval": 60,
+  "conflict_log": "test_data/.sync_conflicts.log",
+  "last_sync": {}
+}

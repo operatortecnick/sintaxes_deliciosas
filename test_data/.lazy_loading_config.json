@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "size_threshold": 52428800,
+  "load_on_access": true,
+  "preload_recent": true,
+  "max_preload_size": 209715200
+}

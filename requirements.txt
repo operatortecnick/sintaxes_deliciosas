@@ -1,0 +1,6 @@
+click>=8.0.0
+psutil>=5.8.0
+colorama>=0.4.4
+tqdm>=4.62.0
+pathspec>=0.9.0
+send2trash>=1.8.0

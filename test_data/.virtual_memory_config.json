@@ -1,0 +1,6 @@
+{
+  "memory_map_threshold": 10485760,
+  "max_mapped_files": 50,
+  "auto_unmap_timeout": 300,
+  "priority_files": []
+}

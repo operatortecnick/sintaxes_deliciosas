@@ -1,0 +1,36 @@
+{
+  "watch_folders": [
+    "Downloads",
+    "Desktop",
+    "Temp"
+  ],
+  "rules": {
+    "images": {
+      "extensions": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".bmp"
+      ],
+      "destination": "Personal/Media/Photos"
+    },
+    "documents": {
+      "extensions": [
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".txt"
+      ],
+      "destination": "Personal/Documents"
+    },
+    "archives": {
+      "extensions": [
+        ".zip",
+        ".rar",
+        ".7z"
+      ],
+      "destination": "Software/Archive"
+    }
+  }
+}
